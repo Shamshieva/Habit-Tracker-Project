@@ -24,7 +24,7 @@ public class Habit {
     @Enumerated(EnumType.STRING)
     private ExecutionFrequency frequency;
     private Boolean isDone;
-    @ManyToOne(cascade = {PERSIST, DETACH, MERGE, REFRESH})
+    @ManyToOne
     private Calendar calendar;
     @OneToOne(cascade = CascadeType.ALL)
     private Measurement measurement;

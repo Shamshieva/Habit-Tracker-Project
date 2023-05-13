@@ -39,8 +39,7 @@ public class HabitServiceImpl implements HabitService {
                         .endDate(request.end_date())
                         .build())
                 .build();
-        Calendar calendar = new Calendar();
-        calendar.addHabit(habit);
+        user.getCalendar().addHabit(habit);
         habitRepository.save(habit);
         return SimpleResponse.builder()
                 .status(HttpStatus.OK)

@@ -24,13 +24,4 @@ public class CalendarApi {
     public CalendarResponse getCalendarByUserId(@PathVariable Long userId){
         return calendarService.getCalendarByUserId(userId);
     }
-
-//    @GetMapping
-//    @Operation(summary = "Get all Calendars with users method ",
-//            description = "Calendar with users"
-//    )
-//    public List<CalendarResponse> getCalendars(){
-//        return calendarService.findAll();
-//    }
-
 }

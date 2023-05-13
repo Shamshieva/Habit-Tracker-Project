@@ -2,6 +2,7 @@ package com.example.api;
 
 import com.example.dto.request.UserRequest;
 import com.example.dto.request.UserUpdateRequest;
+import com.example.dto.response.HabitResponse;
 import com.example.dto.response.HabitUserResponse;
 import com.example.dto.response.SimpleResponse;
 import com.example.dto.response.UserProfileResponse;
@@ -53,7 +54,7 @@ public class UserProfileApi {
     @Operation(summary = "Get the user's habits  method",
             description = "User with id"
     )
-    public List<HabitUserResponse> getHabits(@RequestParam Long id){
+    public List<HabitResponse> getHabits(@RequestParam Long id){
         return userProfileService.getHabits(id);
     }
 

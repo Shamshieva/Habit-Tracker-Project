@@ -2,18 +2,22 @@ package com.example.service.impl;
 
 import com.example.dto.request.UserRequest;
 import com.example.dto.request.UserUpdateRequest;
+import com.example.dto.response.HabitResponse;
 import com.example.dto.response.HabitUserResponse;
 import com.example.dto.response.SimpleResponse;
 import com.example.dto.response.UserProfileResponse;
+import com.example.entity.Calendar;
 import com.example.entity.User;
 import com.example.enums.Role;
 import com.example.exceptions.AlreadyExistException;
 import com.example.exceptions.NotFoundException;
+import com.example.repository.CalendarRepository;
 import com.example.repository.HabitRepository;
 import com.example.repository.UserRepository;
 import com.example.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +27,8 @@ import java.util.List;
 public class UserProfileServiceImpl implements UserProfileService {
     private final UserRepository userRepository;
     private final HabitRepository habitRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CalendarRepository calendarRepository;
     @Override
     public SimpleResponse save(UserRequest request) {
         if (userRepository.existsByEmail(request.email())){
@@ -30,14 +36,16 @@ public class UserProfileServiceImpl implements UserProfileService {
                     String.format("User with email: %s already exists!", request.email())
             );
         }
+        Calendar calendar = Calendar.builder().build();
         User user = User.builder()
                 .fullName(request.fullName())
                 .icon(request.icon())
                 .role(Role.USER)
+                .calendar(calendar)
                 .email(request.email())
-                .password(request.password())
+                .password(passwordEncoder.encode(request.password()))
                 .build();
-
+        calendar.setUser(user);
         userRepository.save(user);
         return SimpleResponse.builder()
                 .status(HttpStatus.OK)
@@ -79,7 +87,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public List<HabitUserResponse> getHabits(Long id) {
+    public List<HabitResponse> getHabits(Long id) {
         return habitRepository.getHabits(id);
     }
 }

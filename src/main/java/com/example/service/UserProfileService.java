@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.dto.request.UserRequest;
 import com.example.dto.request.UserUpdateRequest;
+import com.example.dto.response.HabitResponse;
 import com.example.dto.response.HabitUserResponse;
 import com.example.dto.response.SimpleResponse;
 import com.example.dto.response.UserProfileResponse;
@@ -17,5 +18,5 @@ public interface UserProfileService {
 
     SimpleResponse update(UserUpdateRequest request);
 
-    List<HabitUserResponse> getHabits(Long id);
+    List<HabitResponse> getHabits(Long id);
 }

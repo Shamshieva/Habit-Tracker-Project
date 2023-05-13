@@ -27,10 +27,10 @@ public class Calendar {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @OneToOne(cascade = ALL)
+    @OneToOne
     private User user;
 
-    @OneToMany(cascade = {PERSIST, MERGE, REFRESH, DETACH})
+    @OneToMany
     private List<Habit> habits;
 
     public void addHabit(Habit habit){
