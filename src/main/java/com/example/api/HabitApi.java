@@ -8,6 +8,7 @@ import com.example.service.HabitService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class HabitApi {
     private final HabitService habitService;
 
     @GetMapping("/get")
+    @PreAuthorize("hasAuthority('USER')")
     @Operation(summary = "The habit get with name method",
-            description = "Habit with name"
-    )
+            description = "Habit with name")
     public HabitResponse getHabit(@RequestParam  String habitName){
         return habitService.getHabit(habitName);
     }
@@ -30,14 +31,14 @@ public class HabitApi {
     @PostMapping
     @Operation(summary = "Method for saving the habit request.",
             description = "You can save habit using this method.")
-    public SimpleResponse save(@RequestBody HabitRequest request){
-        return habitService.save(request);
+    public SimpleResponse save(@RequestParam Long userId,
+                               @RequestBody HabitRequest request){
+        return habitService.save(userId, request);
     }
 
     @GetMapping
     @Operation(summary = "The habit get all method",
-            description = "Habit get all"
-    )
+            description = "Habit get all")
     public List<HabitResponse> habits(){
         return habitService.getAll();
     }

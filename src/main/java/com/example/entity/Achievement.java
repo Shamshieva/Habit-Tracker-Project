@@ -26,8 +26,4 @@ public class Achievement {
 
     @ManyToOne(cascade = {PERSIST, MERGE, REFRESH, DETACH})
     private Habit habit;
-
-
-
-
 }
